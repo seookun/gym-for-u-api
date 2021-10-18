@@ -6,17 +6,17 @@ import { validationMetadatasToSchemas } from 'class-validator-jsonschema';
 import { getMetadataArgsStorage, RoutingControllersOptions, useExpressServer } from 'routing-controllers';
 import { routingControllersToSpec } from 'routing-controllers-openapi';
 import Locals from './Locals';
-import { stream } from './Log';
+import { stream } from '@/utils/logger';
 
 export default class Express {
   public static app: express.Application = express();
-  public static port = process.env.PORT || 3000;
+  public static port = Locals.port;
 
   public static init(): Promise<void> {
     return new Promise((resolve) => {
       const options = {
         defaultErrorHandler: false,
-        routePrefix: process.env.API_PREFIX,
+        routePrefix: Locals.apiPrefix,
         controllers: [path.join(__dirname, '../controllers/*.ts')],
         middlewares: [path.join(__dirname, '../middlewares/*.ts')],
         interceptors: [path.join(__dirname, '../interceptors/*.ts')],

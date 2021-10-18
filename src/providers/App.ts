@@ -1,6 +1,6 @@
 import Database from './Database';
 import Express from './Express';
-import { logger } from './Log';
+import logger from '@/utils/logger';
 
 export default class App {
   public static async loadConfiguration() {

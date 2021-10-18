@@ -1,6 +1,6 @@
 import { Middleware, ExpressErrorMiddlewareInterface } from 'routing-controllers';
 import { ValidationError } from 'class-validator';
-import { logger } from '../providers/Log';
+import logger from '@/utils/logger';
 
 interface ResultFailure {
   isSuccess: false;

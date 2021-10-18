@@ -9,17 +9,16 @@ export interface User {
   updatedAt: Date;
 }
 
-export default model<User>(
-  'User',
-  new Schema<User>(
-    {
-      email: { type: String, required: true, unique: true },
-      password: { type: String, required: true },
-      name: { type: String, required: true },
-      picto: { type: String },
-    },
-    {
-      timestamps: true,
-    },
-  ),
+export const userSchema = new Schema<User>(
+  {
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    name: { type: String, required: true },
+    picto: { type: String },
+  },
+  {
+    timestamps: true,
+  },
 );
+
+export default model<User>('User', userSchema);
