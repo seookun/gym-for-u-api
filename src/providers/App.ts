@@ -1,5 +1,6 @@
 import Database from './Database';
 import Express from './Express';
+import Locals from './Locals';
 import logger from '@/utils/logger';
 
 export default class App {
@@ -10,11 +11,11 @@ export default class App {
 
   static async loadDatabase() {
     await Database.init();
-    logger.info(`Database loaded, Connection Uri: ${process.env.MONGODB_CONNECTION_URI}`);
+    logger.info(`Database loaded, Connection Uri: ${Locals.mongoConnectionUri}`);
   }
 
   static async loadExpress() {
     await Express.init();
-    logger.info(`Express loaded, Listening on ${process.env.PORT}`);
+    logger.info(`Express loaded, Listening on ${Locals.port}`);
   }
 }
