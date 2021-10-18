@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon",
     "build": "tsc -p tsconfig.json",
-    "start": "npm run build && cross-env NODE_ENV=production node dist/index.js"
+    "start": "npm run build && cross-env NODE_ENV=production node dist/index.js",
+    "lint": "eslint --ignore-path .gitignore --ext .ts src/"
   },
   "dependencies": {
     "class-transformer": "^0.4.0",
