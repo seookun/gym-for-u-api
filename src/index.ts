@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import App from './providers/App';
+import { logger } from './providers/Log';
 
 (async () => {
   try {
@@ -11,10 +12,8 @@ import App from './providers/App';
 
     // Load Express Server
     await App.loadExpress();
-
-    console.log(`Listening on ${process.env.PORT}`);
   } catch (e) {
-    console.log(e);
+    logger.error(e);
     process.exit();
   }
 })();

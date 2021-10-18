@@ -1,5 +1,6 @@
 import { Middleware, ExpressErrorMiddlewareInterface } from 'routing-controllers';
 import { ValidationError } from 'class-validator';
+import { logger } from '../providers/Log';
 
 interface ResultFailure {
   isSuccess: false;
@@ -12,8 +13,7 @@ interface ResultFailure {
 @Middleware({ type: 'after' })
 export default class ErrorMiddleware implements ExpressErrorMiddlewareInterface {
   error(err: any, req: any, res: any) {
-    console.error(err);
-
+    logger.error(err);
     res.status(err.httpCode || 500).json(this.toResultFailure(err));
   }
 
