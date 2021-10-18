@@ -2,15 +2,15 @@ import { IsEmail, MinLength, IsOptional, IsString } from 'class-validator';
 
 export class CreateUserRequest {
   @IsEmail()
-  public email!: string;
+  email!: string;
 
   @MinLength(6)
-  public password!: string;
+  password!: string;
 
   @MinLength(2)
-  public name!: string;
+  name!: string;
 
   @IsOptional()
   @IsString()
-  public picto?: string;
+  picto?: string;
 }

@@ -9,10 +9,10 @@ import Locals from './Locals';
 import { stream } from '@/utils/logger';
 
 export default class Express {
-  public static app: express.Application = express();
-  public static port = Locals.port;
+  static app: express.Application = express();
+  static port = Locals.port;
 
-  public static init(): Promise<void> {
+  static init(): Promise<void> {
     return new Promise((resolve) => {
       const options = {
         defaultErrorHandler: false,

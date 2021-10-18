@@ -1,4 +1,4 @@
-import { JsonController, Get, Post, Body, HttpCode } from 'routing-controllers';
+import { JsonController, Get, Post, Body } from 'routing-controllers';
 import UserService from '@/services/UserService';
 import { CreateUserRequest } from '@/dtos/UserDto';
 
