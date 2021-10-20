@@ -17,16 +17,21 @@ export default class ErrorMiddleware implements ExpressErrorMiddlewareInterface 
     res.status(err.httpCode || 500).json(this.toResultFailure(err));
   }
 
-  private toResultFailure(err: any): ResultFailure {
-    return {
+  private toResultFailure(err: any) {
+    const resultFailure: ResultFailure = {
       isSuccess: false,
       error: {
         message: err.message,
-        validationErrors: err.errors?.map((e: ValidationError) => ({
-          ...e,
-          target: e.target?.constructor.name,
-        })),
       },
     };
+
+    if (err.name === 'BadRequestError') {
+      resultFailure.error.validationErrors = err.errors?.map((e: ValidationError) => ({
+        ...e,
+        target: e.target?.constructor.name,
+      }));
+    }
+
+    return resultFailure;
   }
 }
