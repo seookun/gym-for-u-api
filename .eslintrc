@@ -9,6 +9,8 @@
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-non-null-assertion": "off",
-    "prefer-template": "error"
+    "quotes": ["error", "single", { "allowTemplateLiterals": false }],
+    "prefer-template": "error",
+    "no-template-curly-in-string": "error"
   }
 }
