@@ -6,7 +6,7 @@
   "license": "ISC",
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon",
-    "build": "tsc -p tsconfig.json",
+    "build": "tsc && npx tsc-alias",
     "start": "npm run build && cross-env NODE_ENV=production node dist/index.js",
     "lint": "eslint --ignore-path .gitignore --ext .ts src/"
   },
