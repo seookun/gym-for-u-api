@@ -24,6 +24,10 @@ export default class UserService {
       throw new HttpError(409, 'An account with this email already exists.');
     }
 
+    if (await UserModel.exists({ name: req.name })) {
+      throw new HttpError(409, 'An account with this name already exists.');
+    }
+
     if (await UserModel.exists({ phoneNumber: req.phoneNumber })) {
       throw new HttpError(409, 'An account with this phone number already exists.');
     }
