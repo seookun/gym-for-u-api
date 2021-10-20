@@ -21,15 +21,15 @@ export default class UserService {
 
   async createUser(req: CreateUserRequest) {
     if (await UserModel.exists({ email: req.email })) {
-      throw new HttpError(409, 'An account with this email already exists.');
+      throw new HttpError(409, 'An user with this email already exists.');
     }
 
     if (await UserModel.exists({ name: req.name })) {
-      throw new HttpError(409, 'An account with this name already exists.');
+      throw new HttpError(409, 'An user with this name already exists.');
     }
 
     if (await UserModel.exists({ phoneNumber: req.phoneNumber })) {
-      throw new HttpError(409, 'An account with this phone number already exists.');
+      throw new HttpError(409, 'An user with this phone number already exists.');
     }
 
     const user = {
