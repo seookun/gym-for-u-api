@@ -1,15 +1,22 @@
+import * as moemnt from 'moment';
 import { HttpError } from 'routing-controllers';
-
-import UserModel from '@/models/UserModel';
+import { isMongoId } from 'class-validator';
+import { FilterQuery } from 'mongoose';
+import { hash } from '@/utils/crypto';
+import UserModel, { User } from '@/models/UserModel';
 import { CreateUserRequest } from '@/dtos/UserDto';
 
 export default class UserService {
-  async findUserById(_id: string) {
-    return await UserModel.find({ _id });
+  async findUsers(query: FilterQuery<User>) {
+    return (await UserModel.find(query)).flatMap((doc) => doc.toJSON());
   }
 
-  async findAllUsers() {
-    return await UserModel.find({});
+  async findUserById(_id: string) {
+    if (!isMongoId(_id)) {
+      throw new HttpError(400, `Cast to ObjectId failed for value ${_id}`);
+    }
+
+    return await this.findUser({ _id });
   }
 
   async createUser(req: CreateUserRequest) {
@@ -17,6 +24,26 @@ export default class UserService {
       throw new HttpError(409, 'An account with this email already exists.');
     }
 
-    await new UserModel(req).save();
+    if (await UserModel.exists({ phoneNumber: req.phoneNumber })) {
+      throw new HttpError(409, 'An account with this phone number already exists.');
+    }
+
+    const user = {
+      ...req,
+      password: hash(req.password),
+      passwordExpiresIn: moemnt().add(6, 'months').valueOf(),
+    };
+
+    await new UserModel(user).save();
+  }
+
+  private async findUser(query: FilterQuery<User>) {
+    const user = (await UserModel.findOne(query))?.toJSON();
+
+    if (!user) {
+      throw new HttpError(404, 'User not found.');
+    }
+
+    return user;
   }
 }
