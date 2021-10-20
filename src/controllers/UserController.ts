@@ -20,7 +20,7 @@ export default class UserController {
   }
 
   @Post()
-  async createUser(@Body() user: CreateUserRequest) {
-    await this.userService.createUser(user);
+  async createUser(@Body() req: CreateUserRequest) {
+    await this.userService.createUser(req);
   }
 }
