@@ -28,12 +28,15 @@ export class FetchGymResponse {
   @IsString()
   name!: string;
 
+  @IsOptional()
   @IsString()
   description?: string;
 
+  @IsOptional()
   @IsString()
   thumbnail?: string;
 
+  @IsOptional()
   @IsString()
   homepage?: string;
 
