@@ -14,7 +14,8 @@ export default class Locals {
   static readonly mongoConnectionUri = process.env.MONGO_CONNECTION_URI!;
 
   // Token
-  static readonly tokenSecretKey = process.env.TOKEN_SECRET_KEY!;
-  static readonly tokenExpiresInHours = parseInt(process.env.TOKEN_EXPIRES_IN_HOURS!);
-  static readonly tokenExpiresInDays = parseInt(process.env.TOKEN_EXPIRES_IN_DAYS!);
+  static readonly refreshTokenSecretKey = process.env.REFRESH_TOKEN_SECRET_KEY!;
+  static readonly refreshTokenExpiresIn = process.env.REFRESH_TOKEN_EXPIRES_IN!;
+  static readonly accessTokenSecretKey = process.env.ACCESS_TOKEN_SECRET_KEY!;
+  static readonly accessTokenExpiresIn = process.env.ACCESS_TOKEN_EXPIRES_IN!;
 }
