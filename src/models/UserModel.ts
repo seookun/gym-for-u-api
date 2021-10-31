@@ -1,5 +1,10 @@
 import { Document, Schema, model } from 'mongoose';
 
+export enum UserRole {
+  Admin = 'Administrator',
+  User = 'User',
+}
+
 export interface User extends Document {
   email: string;
   password?: string;
@@ -7,6 +12,7 @@ export interface User extends Document {
   name: string;
   phoneNumber: string;
   picto?: string;
+  roles: UserRole[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -19,6 +25,7 @@ export const userSchema = new Schema<User>(
     name: { type: String, required: true, unique: true },
     phoneNumber: { type: String, required: true, unique: true },
     picto: { type: String },
+    roles: { type: [String], default: [UserRole.User] },
   },
   {
     timestamps: true,
