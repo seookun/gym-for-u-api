@@ -3,10 +3,19 @@ import * as morgan from 'morgan';
 import * as path from 'path';
 import * as swaggerUi from 'swagger-ui-express';
 import { validationMetadatasToSchemas } from 'class-validator-jsonschema';
-import { getMetadataArgsStorage, RoutingControllersOptions, useExpressServer } from 'routing-controllers';
+import { Action, getMetadataArgsStorage, RoutingControllersOptions, useExpressServer } from 'routing-controllers';
 import { routingControllersToSpec } from 'routing-controllers-openapi';
 import Locals from './Locals';
 import { stream } from '@/utils/logger';
+import { verifyAccessToken } from '@/utils/jwt';
+import { UserRole } from '@/models/UserModel';
+
+function authorizationChecker(action: Action, roles: UserRole[]) {
+  const accessToken = action.request.headers.authorization?.replace('Bearer', '').trim();
+  const payload = verifyAccessToken(accessToken);
+
+  return !roles.length || roles.some((role) => payload.roles.includes(role));
+}
 
 export default class Express {
   static app: express.Application = express();
@@ -17,6 +26,7 @@ export default class Express {
       const options = {
         defaultErrorHandler: false,
         routePrefix: Locals.apiPrefix,
+        authorizationChecker,
         controllers: [path.join(__dirname, '../controllers/*.ts')],
         middlewares: [path.join(__dirname, '../middlewares/*.ts')],
         interceptors: [path.join(__dirname, '../interceptors/*.ts')],
@@ -45,7 +55,15 @@ function useSwagger(app: express.Application, options: RoutingControllersOptions
   const spec = routingControllersToSpec(storage, options, {
     components: {
       schemas,
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
+      },
     },
+    security: [{ bearerAuth: [] }],
   });
 
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(spec));
