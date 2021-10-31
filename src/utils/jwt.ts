@@ -21,7 +21,7 @@ function verify(token: string, secretKey: string) {
   try {
     return <Payload>jwt.verify(token, secretKey);
   } catch {
-    throw new HttpError(401, 'Invalid token.');
+    throw new HttpError(401, '유효하지 않은 토큰입니다.');
   }
 }
 

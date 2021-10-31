@@ -13,7 +13,7 @@ export default class UserService {
 
   async findUserById(_id: string) {
     if (!isMongoId(_id)) {
-      throw new HttpError(400, `Cast to ObjectId failed for value ${_id}`);
+      throw new HttpError(400, `${_id}는 잘못된 ObjectId 입니다. `);
     }
 
     return await this.findUser({ _id });
@@ -21,15 +21,15 @@ export default class UserService {
 
   async createUser(req: CreateUserRequest) {
     if (await UserModel.exists({ email: req.email })) {
-      throw new HttpError(409, 'An user with this email already exists.');
+      throw new HttpError(409, '이미 존재하는 이메일 입니다.');
     }
 
     if (await UserModel.exists({ name: req.name })) {
-      throw new HttpError(409, 'An user with this name already exists.');
+      throw new HttpError(409, '이미 존재하는 이름 입니다.');
     }
 
     if (await UserModel.exists({ phoneNumber: req.phoneNumber })) {
-      throw new HttpError(409, 'An user with this phone number already exists.');
+      throw new HttpError(409, '이미 존재하는 휴대폰번호 입니다.');
     }
 
     const user = {
@@ -45,7 +45,7 @@ export default class UserService {
     const user = (await UserModel.findOne(query))?.toJSON();
 
     if (!user) {
-      throw new HttpError(404, 'User not found.');
+      throw new HttpError(404, '요청하신 정보를 찾을 수 없습니다.');
     }
 
     return user;
