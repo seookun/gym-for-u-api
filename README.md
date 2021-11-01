@@ -3,16 +3,13 @@
 ## Schema
 ### API Response
 ``` ts
-API Response {
-  isSuccess: boolean;
-  data?: any;
-  error?: {
-    message: string;
-    validationErrors?: ValidationError[];
-  }
+ResultSuccess: any;
+
+ResultFailure {
+  errorMessage: string;
+  validationErrors?: ValidationError[];
 }
-```
-``` ts
+
 ValidatorError {
     /**
      * Object that was validated.
@@ -43,12 +40,5 @@ ValidatorError {
     contexts?: {
         [type: string]: any;
     };
-    /**
-     *
-     * @param shouldDecorate decorate the message with ANSI formatter escape codes for better readability
-     * @param hasParent true when the error is a child of an another one
-     * @param parentPath path as string to the parent of this property
-     */
-    toString(shouldDecorate?: boolean, hasParent?: boolean, parentPath?: string): string;
 }
 ```

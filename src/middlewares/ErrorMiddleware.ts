@@ -3,11 +3,8 @@ import { ValidationError } from 'class-validator';
 import logger from '@/utils/logger';
 
 interface ResultFailure {
-  isSuccess: false;
-  error: {
-    message: string;
-    validationErrors?: ValidationError[];
-  };
+  errorMessage: string;
+  validationErrors?: ValidationError[];
 }
 
 @Middleware({ type: 'after' })
@@ -19,14 +16,11 @@ export default class ErrorMiddleware implements ExpressErrorMiddlewareInterface 
 
   private toResultFailure(err: any) {
     const resultFailure: ResultFailure = {
-      isSuccess: false,
-      error: {
-        message: err.message,
-      },
+      errorMessage: err.message,
     };
 
     if (err.name === 'BadRequestError') {
-      resultFailure.error.validationErrors = err.errors?.map((e: ValidationError) => ({
+      resultFailure.validationErrors = err.errors?.map((e: ValidationError) => ({
         ...e,
         target: e.target?.constructor.name,
       }));
