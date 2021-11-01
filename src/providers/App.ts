@@ -6,7 +6,7 @@ import logger from '@/utils/logger';
 export default class App {
   static async loadConfiguration() {
     await import('./Locals');
-    logger.info('Configuration loaded');
+    logger.info(`Configuration loaded, ${process.env.NODE_ENV}`);
   }
 
   static async loadDatabase() {
