@@ -6,8 +6,8 @@
   "license": "ISC",
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon",
-    "build": "tsc && npx tsc-alias",
-    "start": "npm run build && cross-env NODE_ENV=production node dist/index.js",
+    "build": "tsc && tsc-alias",
+    "start": "npm run build && cross-env NODE_ENV=development node dist/index.js",
     "lint": "eslint --ignore-path .gitignore --ext .ts src/"
   },
   "dependencies": {
@@ -42,6 +42,7 @@
     "nodemon": "^2.0.13",
     "prettier": "^2.4.1",
     "ts-node": "^10.3.0",
+    "tsc-alias": "^1.4.0",
     "tsconfig-paths": "^3.11.0"
   }
 }
