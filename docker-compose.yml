@@ -12,12 +12,12 @@ services:
       - backend
 
   server:
-    build:
-      context: ./
-      dockerfile: Dockerfile
+    image: node:17
     container_name: server
+    command: sh -c "npm install && npm start"
+    woring_dir: /app
     volumes:
-      - .:/home/app
+      - ./:/app
     ports:
       - 3000:3000
     networks:
