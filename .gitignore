@@ -1,8 +1,8 @@
-# Dependency directories
-node_modules/
+# dependency directories
+node_modules
 
-# Compiled directories
-dist/
+# compiled directories
+dist
 
 # dotenv environment variables file
 .env.local
