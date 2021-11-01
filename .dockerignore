@@ -1,0 +1,18 @@
+# dependency directories
+node_modules
+
+# compiled directories
+dist
+
+# code formatter
+.eslintrc
+.eslintignore
+.editorconfig
+.prettierrc
+
+# test
+jest.config.js
+
+# docker
+Dockerfile
+docker-compose.yml
