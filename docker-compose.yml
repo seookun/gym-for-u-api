@@ -4,7 +4,6 @@ services:
   mongo:
     image: mongo
     container_name: mongo
-    command: sh -c 'npm install && npm start'
     volumes:
       - ~/db:/data/db
     ports:
@@ -17,6 +16,8 @@ services:
       context: ./
       dockerfile: Dockerfile
     container_name: server
+    volumes:
+      - .:/home/app
     ports:
       - 3000:3000
     networks:
