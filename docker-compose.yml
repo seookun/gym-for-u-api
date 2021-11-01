@@ -4,6 +4,7 @@ services:
   mongo:
     image: mongo
     container_name: mongo
+    command: sh -c 'npm install && npm start'
     volumes:
       - ~/db:/data/db
     ports:
