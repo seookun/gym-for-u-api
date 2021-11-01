@@ -1,7 +1,7 @@
 import * as dotenv from 'dotenv';
 import * as path from 'path';
 
-const normalizedEnvPath = path.join(__dirname, `../../.env.${process.env.NODE_ENV || 'development'}`);
+const normalizedEnvPath = path.join(__dirname, `../../.env.${process.env.NODE_ENV || 'local'}`);
 dotenv.config({ path: normalizedEnvPath });
 
 export default class Locals {
