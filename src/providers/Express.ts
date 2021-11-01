@@ -27,9 +27,9 @@ export default class Express {
         defaultErrorHandler: false,
         routePrefix: Locals.apiPrefix,
         authorizationChecker,
-        controllers: [path.join(__dirname, '../controllers/*.ts')],
-        middlewares: [path.join(__dirname, '../middlewares/*.ts')],
-        interceptors: [path.join(__dirname, '../interceptors/*.ts')],
+        controllers: [path.join(__dirname, '../controllers/*.{js,ts}')],
+        middlewares: [path.join(__dirname, '../middlewares/*.{js,ts}')],
+        interceptors: [path.join(__dirname, '../interceptors/*.{js,ts}')],
       };
 
       useLogger(this.app);
