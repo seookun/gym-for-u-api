@@ -11,7 +11,7 @@ export default class App {
 
   static async loadDatabase() {
     await Database.init();
-    logger.info(`Database loaded, Connection Uri: ${Locals.mongoConnectionUri}`);
+    logger.info(`Database loaded, Connection Uri: ${Locals.dbConnectionUri}`);
   }
 
   static async loadExpress() {
