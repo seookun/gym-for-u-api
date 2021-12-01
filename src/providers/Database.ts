@@ -3,6 +3,6 @@ import Locals from './Locals';
 
 export default class Database {
   static async init() {
-    await connect(Locals.mongoConnectionUri);
+    await connect(Locals.dbConnectionUri);
   }
 }

@@ -11,7 +11,7 @@ export default class Locals {
   static readonly apiPrefix = process.env.API_PREFIX!;
 
   // Database
-  static readonly mongoConnectionUri = process.env.MONGO_CONNECTION_URI!;
+  static readonly dbConnectionUri = process.env.DB_CONNECTION_URI!;
 
   // Token
   static readonly refreshTokenSecretKey = process.env.REFRESH_TOKEN_SECRET_KEY!;
