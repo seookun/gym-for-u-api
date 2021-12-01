@@ -1,4 +1,4 @@
-import { JsonController, Post, Body, Param } from 'routing-controllers';
+import { JsonController, Post, Body, Param, OnUndefined } from 'routing-controllers';
 import { ResponseSchema } from 'routing-controllers-openapi';
 import jwt from '@/utils/jwt';
 import { LoginBasicRequest, LoginResponse } from '@/dtos/AuthDto';
@@ -24,6 +24,7 @@ export default class LoginController {
   }
 
   @Post('/logout/:refreshToken')
+  @OnUndefined(200)
   async doLogout(@Param('refreshToken') refreshToken: string) {
     const { userId } = jwt.verifyRefreshToken(refreshToken);
     await this.userTokenServcie.deleteUserToken(userId, refreshToken);

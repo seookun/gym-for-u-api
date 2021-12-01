@@ -1,4 +1,4 @@
-import { JsonController, Authorized, Get, Post, Param, Body } from 'routing-controllers';
+import { JsonController, Authorized, Get, Post, Param, Body, OnUndefined } from 'routing-controllers';
 import { ResponseSchema } from 'routing-controllers-openapi';
 import { CreateGymRequest, FetchGymResponse } from '@/dtos/GymDto';
 import GymService from '@/services/GymService';
@@ -23,6 +23,7 @@ export default class GymController {
 
   @Authorized()
   @Post()
+  @OnUndefined(200)
   async createGym(@Body() req: CreateGymRequest) {
     await this.gymService.createGym(req);
   }

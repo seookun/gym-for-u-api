@@ -1,4 +1,4 @@
-import { JsonController, Authorized, Get, Post, Body, Param } from 'routing-controllers';
+import { JsonController, Authorized, Get, Post, Body, Param, OnUndefined } from 'routing-controllers';
 import { ResponseSchema } from 'routing-controllers-openapi';
 import { CreateUserRequest, FetchUserResponse } from '@/dtos/UserDto';
 import UserService from '@/services/UserService';
@@ -22,6 +22,7 @@ export default class UserController {
   }
 
   @Post()
+  @OnUndefined(200)
   async createUser(@Body() req: CreateUserRequest) {
     await this.userService.createUser(req);
   }
