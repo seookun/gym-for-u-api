@@ -1,6 +1,5 @@
 import 'reflect-metadata';
 import App from '@/providers/App';
-import logger from '@/utils/logger';
 
 (async () => {
   // Load Configuration
