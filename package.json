@@ -7,8 +7,6 @@
   "scripts": {
     "serve": "nodemon",
     "build": "tsc && tsc-alias",
-    "start": "npm run build && cross-env NODE_ENV=production node dist/index.js",
-    "start:dev": "npm run build && cross-env NODE_ENV=development node dist/index.js",
     "lint": "eslint --ignore-path .gitignore --ext .ts src/",
     "lint:fix": "npm run lint -- --fix"
   },
