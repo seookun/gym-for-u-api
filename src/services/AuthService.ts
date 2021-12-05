@@ -2,7 +2,7 @@ import { isEmail } from 'class-validator';
 import { FilterQuery } from 'mongoose';
 import { HttpError } from 'routing-controllers';
 import { hash } from '@/utils/crypto';
-import UserModel, { User } from '@/models/UserModel';
+import UserModel, { User, UserToJson } from '@/models/UserModel';
 import { LoginBasicRequest } from '@/dtos/AuthDto';
 
 export default class AuthService {
@@ -15,7 +15,7 @@ export default class AuthService {
       query.name = req.emailOrName;
     }
 
-    const user = (await UserModel.findOne(query))?.toJSON();
+    const user = (await UserModel.findOne(query))?.toJSON<UserToJson>();
 
     if (!user) {
       throw new HttpError(401, 'The ID is not registered or the ID or password is entered incorrectly.');

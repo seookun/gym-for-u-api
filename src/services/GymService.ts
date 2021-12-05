@@ -1,12 +1,12 @@
 import { HttpError } from 'routing-controllers';
 import { isMongoId } from 'class-validator';
 import { FilterQuery } from 'mongoose';
-import GymModel, { Gym } from '@/models/GymModel';
+import GymModel, { Gym, GymToJson } from '@/models/GymModel';
 import { CreateGymRequest } from '@/dtos/GymDto';
 
 export default class GymService {
   async findGyms(query: FilterQuery<Gym>) {
-    return (await GymModel.find(query)).flatMap((doc) => doc.toJSON());
+    return (await GymModel.find(query)).flatMap((doc) => doc.toJSON<GymToJson>());
   }
 
   async findGymById(_id: string) {
@@ -26,7 +26,7 @@ export default class GymService {
   }
 
   private async findGym(query: FilterQuery<Gym>) {
-    const gym = (await GymModel.findOne(query))?.toJSON();
+    const gym = (await GymModel.findOne(query))?.toJSON<GymToJson>();
 
     if (!gym) {
       throw new HttpError(404, '요청하신 정보를 찾을 수 없습니다.');

@@ -3,12 +3,12 @@ import { HttpError } from 'routing-controllers';
 import { isMongoId } from 'class-validator';
 import { FilterQuery } from 'mongoose';
 import { hash } from '@/utils/crypto';
-import UserModel, { User } from '@/models/UserModel';
+import UserModel, { User, UserToJson } from '@/models/UserModel';
 import { CreateUserRequest } from '@/dtos/UserDto';
 
 export default class UserService {
   async findUsers(query: FilterQuery<User>) {
-    return (await UserModel.find(query)).flatMap((doc) => doc.toJSON());
+    return (await UserModel.find(query)).flatMap((doc) => doc.toJSON<UserToJson>());
   }
 
   async findUserById(_id: string) {
@@ -42,7 +42,7 @@ export default class UserService {
   }
 
   private async findUser(query: FilterQuery<User>) {
-    const user = (await UserModel.findOne(query))?.toJSON();
+    const user = (await UserModel.findOne(query))?.toJSON<UserToJson>();
 
     if (!user) {
       throw new HttpError(404, '요청하신 정보를 찾을 수 없습니다.');

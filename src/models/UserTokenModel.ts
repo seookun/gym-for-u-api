@@ -5,6 +5,10 @@ export interface UserToken extends Document {
   refreshToken: string;
 }
 
+export interface UserTokenToJson extends UserToken {
+  _id: string;
+}
+
 export const userTokenSchema = new Schema<UserToken>(
   {
     userId: { type: String, required: true },

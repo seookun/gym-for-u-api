@@ -22,6 +22,10 @@ export interface Gym extends Document {
   updatedAt: Date;
 }
 
+export interface GymToJson extends Gym {
+  _id: string;
+}
+
 export const gymSchema = new Schema<Gym>(
   {
     name: { type: String, required: true, unique: true },

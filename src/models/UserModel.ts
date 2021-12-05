@@ -17,6 +17,11 @@ export interface User extends Document {
   updatedAt: Date;
 }
 
+export interface UserToJson extends User {
+  _id: string;
+  password: undefined;
+}
+
 export const userSchema = new Schema<User>(
   {
     email: { type: String, required: true, unique: true, index: true },
@@ -30,7 +35,6 @@ export const userSchema = new Schema<User>(
   {
     timestamps: true,
     toJSON: {
-      versionKey: false,
       transform(doc, ret) {
         ret._id = ret._id.toString();
         delete ret.password;
