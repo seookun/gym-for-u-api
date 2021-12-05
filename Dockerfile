@@ -1,7 +1,5 @@
 FROM node:17
 
-ARG NODE_ENV
-
 WORKDIR /app
 COPY package*.json ./
 
@@ -10,5 +8,8 @@ COPY . .
 
 RUN npm run build
 
+ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh /
+RUN chmod +x /wait-for-it.sh
+
 EXPOSE 3000
-ENTRYPOINT ["/bin/sh", "-c", "node_modules/.bin/cross-env NODE_ENV=$NODE_ENV node dist/index.js"]
+ENTRYPOINT ["/bin/sh", "-c"]
