@@ -8,5 +8,6 @@ COPY package*.json ./
 RUN npm install
 COPY . .
 
+RUN npm run build
 EXPOSE 3000
-RUN npm run build && cross-env NODE_ENV=$NODE_ENV node dist/index.js
+ENTRYPOINT ["/bin/bash", "-c", "cross-env NODE_ENV=$NODE_ENV node dist/index.js"]
