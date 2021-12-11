@@ -8,6 +8,6 @@ import App from '@/providers/App';
   // Load Database
   await App.loadDatabase();
 
-  // Load Express Server
-  await App.loadExpress();
+  // Load Server
+  await App.loadServer();
 })();

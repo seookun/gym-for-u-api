@@ -1,4 +1,4 @@
-import * as express from 'express';
+import { Application } from 'express';
 import * as morgan from 'morgan';
 import * as path from 'path';
 import * as swaggerUi from 'swagger-ui-express';
@@ -18,30 +18,28 @@ function authorizationChecker(action: Action, roles: UserRole[]) {
 }
 
 export default class Express {
-  static app: express.Application = express();
-  static port = Locals.port;
+  static init(app: Application) {
+    const routingOptions: RoutingControllersOptions = {
+      defaultErrorHandler: false,
+      routePrefix: Locals.apiPrefix,
+      authorizationChecker,
+      controllers: [path.join(__dirname, '../controllers/*.{js,ts}')],
+      middlewares: [path.join(__dirname, '../middlewares/*.{js,ts}')],
+      interceptors: [path.join(__dirname, '../interceptors/*.{js,ts}')],
+    };
 
-  static init(): Promise<void> {
-    return new Promise((resolve) => {
-      const options = {
-        defaultErrorHandler: false,
-        routePrefix: Locals.apiPrefix,
-        authorizationChecker,
-        controllers: [path.join(__dirname, '../controllers/*.{js,ts}')],
-        middlewares: [path.join(__dirname, '../middlewares/*.{js,ts}')],
-        interceptors: [path.join(__dirname, '../interceptors/*.{js,ts}')],
-      };
-
-      useLogger(this.app);
-      useExpressServer(this.app, options);
-      useSwagger(this.app, options);
-
-      this.app.listen(this.port, resolve);
-    });
+    useLogger(app);
+    useExpressServer(app, routingOptions);
+    useSwagger(app, routingOptions);
   }
 }
 
-function useSwagger(app: express.Application, options: RoutingControllersOptions) {
+function useLogger(app: Application) {
+  const format = Locals.isProduction ? 'combined' : 'dev';
+  app.use(morgan(format, { stream }));
+}
+
+function useSwagger(app: Application, options: RoutingControllersOptions) {
   if (Locals.isProduction) return;
 
   // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -67,9 +65,4 @@ function useSwagger(app: express.Application, options: RoutingControllersOptions
   });
 
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(spec));
-}
-
-function useLogger(app: express.Application) {
-  const format = Locals.isProduction ? 'combined' : 'dev';
-  app.use(morgan(format, { stream }));
 }

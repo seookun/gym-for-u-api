@@ -1,7 +1,13 @@
+import * as express from 'express';
+import { createServer } from 'http';
 import Locals from './Locals';
 import Database from './Database';
-import Express from './Express';
+import ExpressServer from './ExpressServer';
+import SocketServer from './SocketServer';
 import logger from '@/utils/logger';
+
+const app = express();
+const server = createServer(app);
 
 export default class App {
   static async loadConfiguration() {
@@ -14,8 +20,15 @@ export default class App {
     logger.info(`Database loaded, Connection Uri: ${Locals.dbConnectionUri}`);
   }
 
-  static async loadExpress() {
-    await Express.init();
-    logger.info(`Express loaded, Listening on ${Locals.port}`);
+  static async loadServer(): Promise<void> {
+    return new Promise((resolve) => {
+      ExpressServer.init(app);
+      SocketServer.init(server);
+
+      server.listen(Locals.port, () => {
+        resolve();
+        logger.info(`Server loaded, Listening on ${Locals.port}`);
+      });
+    });
   }
 }
