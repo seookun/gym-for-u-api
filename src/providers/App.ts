@@ -1,5 +1,5 @@
 import * as express from 'express';
-import { createServer } from 'http2';
+import { createServer } from 'http';
 import Locals from './Locals';
 import Database from './Database';
 import ExpressServer from './ExpressServer';
