@@ -1,6 +1,6 @@
+import Locals from './Locals';
 import Database from './Database';
 import Express from './Express';
-import Locals from './Locals';
 import logger from '@/utils/logger';
 
 export default class App {
