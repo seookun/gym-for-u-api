@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types, @typescript-eslint/no-var-requires */
 import * as path from 'path';
-import { Server } from 'http';
+import { Http2Server } from 'http2';
 import { SocketControllersOptions, useSocketServer } from 'socket-controllers';
 import { verifyAccessToken } from '@/utils/jwt';
 
@@ -10,12 +10,13 @@ function authorizationChecker(socket: any, next: Function) {
     verifyAccessToken(accessToken);
     next();
   } catch (err) {
-    next(err);
+    // next(err);
+    next();
   }
 }
 
 export default class Socket {
-  static init(server: Server) {
+  static init(server: Http2Server) {
     const io = require('socket.io')(server, {
       cors: { origin: '*' },
     });
