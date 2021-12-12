@@ -1,4 +1,4 @@
-import { JsonController, Authorized, Get, Post, Body, Param, OnUndefined } from 'routing-controllers';
+import { JsonController, Authorized, Get, Post, Body, Param, OnUndefined, CurrentUser } from 'routing-controllers';
 import { ResponseSchema } from 'routing-controllers-openapi';
 import { CreateUserRequest, FetchUserResponse } from '@/dtos/UserDto';
 import UserService from '@/services/UserService';
@@ -8,10 +8,10 @@ export default class UserController {
   private userService = new UserService();
 
   @Authorized()
-  @Get('/:_id')
+  @Get('/:userId')
   @ResponseSchema(FetchUserResponse)
-  async fetchUser(@Param('_id') _id: string) {
-    return await this.userService.findUserById(_id);
+  async fetchUser(@Param('userId') userId: string) {
+    return await this.userService.findUserById(userId);
   }
 
   @Authorized()

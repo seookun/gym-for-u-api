@@ -17,17 +17,17 @@ export default class GymController {
   }
 
   @Authorized()
-  @Get('/:_id')
+  @Get('/:gymId')
   @ResponseSchema(FetchGymResponse)
-  async fetchGym(@Param('_id') _id: string) {
-    return await this.gymService.findGymById(_id);
+  async fetchGym(@Param('gymId') gymId: string) {
+    return await this.gymService.findGymById(gymId);
   }
 
   @Authorized()
   @Post()
   @OnUndefined(200)
   async createGym(@Body() req: CreateGymRequest) {
-    const { _id, name } = await this.gymService.createGym(req);
-    await this.chatRoomService.createChatRoomCommunity(_id, name);
+    const { _id: masterId, name } = await this.gymService.createGym(req);
+    await this.chatRoomService.createChatRoomCommunity(masterId, name);
   }
 }
