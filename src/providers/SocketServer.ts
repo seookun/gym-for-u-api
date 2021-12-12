@@ -7,11 +7,11 @@ import { verifyAccessToken } from '@/utils/jwt';
 function authorizationChecker(socket: any, next: Function) {
   try {
     const accessToken = socket.handshake.headers.authorization?.replace('Bearer', '').trim();
-    verifyAccessToken(accessToken);
+    const { userId } = verifyAccessToken(accessToken);
+    socket.userId = userId;
     next();
   } catch (err) {
-    // next(err);
-    next();
+    next(err);
   }
 }
 
