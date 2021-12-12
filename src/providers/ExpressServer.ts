@@ -10,11 +10,23 @@ import { stream } from '@/utils/logger';
 import { verifyAccessToken } from '@/utils/jwt';
 import { UserRole } from '@/models/UserModel';
 
-function authorizationChecker(action: Action, roles: UserRole[]) {
+function authorizationChecker(action: Action, requiredRoles: UserRole[]) {
   const accessToken = action.request.headers.authorization?.replace('Bearer', '').trim();
-  const payload = verifyAccessToken(accessToken);
+  const { userId, roles } = verifyAccessToken(accessToken);
 
-  return !roles.length || roles.some((role) => payload.roles.includes(role));
+  const isEmpty = requiredRoles.length === 0;
+  const isGranted = requiredRoles.some(roles.includes);
+
+  if (isEmpty || isGranted) {
+    action.response.locals.userId = userId;
+    return true;
+  }
+
+  return false;
+}
+
+function currentUserChecker(action: Action) {
+  return action.response.locals.userId;
 }
 
 export default class Express {
@@ -23,6 +35,7 @@ export default class Express {
       defaultErrorHandler: false,
       routePrefix: Locals.apiPrefix,
       authorizationChecker,
+      currentUserChecker,
       controllers: [path.join(__dirname, '../controllers/*.{js,ts}')],
       middlewares: [path.join(__dirname, '../middlewares/*.{js,ts}')],
       interceptors: [path.join(__dirname, '../interceptors/*.{js,ts}')],
