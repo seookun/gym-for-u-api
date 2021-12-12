@@ -2,10 +2,12 @@ import { JsonController, Authorized, Get, Post, Param, Body, OnUndefined } from 
 import { ResponseSchema } from 'routing-controllers-openapi';
 import { CreateGymRequest, FetchGymResponse } from '@/dtos/GymDto';
 import GymService from '@/services/GymService';
+import ChatRoomService from '@/services/ChatRoomService';
 
 @JsonController('/gyms')
 export default class GymController {
   private gymService = new GymService();
+  private chatRoomService = new ChatRoomService();
 
   @Authorized()
   @Get()
@@ -25,6 +27,7 @@ export default class GymController {
   @Post()
   @OnUndefined(200)
   async createGym(@Body() req: CreateGymRequest) {
-    await this.gymService.createGym(req);
+    const { _id, name } = await this.gymService.createGym(req);
+    await this.chatRoomService.createChatRoomCommunity(_id, name);
   }
 }
