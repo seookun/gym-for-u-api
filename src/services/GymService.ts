@@ -11,7 +11,7 @@ export default class GymService {
 
   async findGymById(_id: string) {
     if (!isMongoId(_id)) {
-      throw new HttpError(400, `${_id}는 잘못된 ObjectId 입니다. `);
+      throw new HttpError(400, `${_id}는 잘못된 ObjectId 입니다.`);
     }
 
     return await this.findGym({ _id });
@@ -22,7 +22,7 @@ export default class GymService {
       throw new HttpError(409, '이미 존재하는 이름이 있습니다.');
     }
 
-    await new GymModel(req).save();
+    return (await new GymModel(req).save()).toJSON<GymToJson>();
   }
 
   private async findGym(query: FilterQuery<Gym>) {

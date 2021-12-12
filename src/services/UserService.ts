@@ -13,7 +13,7 @@ export default class UserService {
 
   async findUserById(_id: string) {
     if (!isMongoId(_id)) {
-      throw new HttpError(400, `${_id}는 잘못된 ObjectId 입니다. `);
+      throw new HttpError(400, `${_id}는 잘못된 ObjectId 입니다.`);
     }
 
     return await this.findUser({ _id });
@@ -38,7 +38,7 @@ export default class UserService {
       passwordExpiresIn: moemnt().add(6, 'months').valueOf(),
     };
 
-    await new UserModel(user).save();
+    return (await new UserModel(user).save()).toJSON<UserToJson>();
   }
 
   private async findUser(query: FilterQuery<User>) {
