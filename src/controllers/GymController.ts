@@ -15,10 +15,10 @@ export default class GymController {
   }
 
   @Authorized()
-  @Get('/:id')
+  @Get('/:_id')
   @ResponseSchema(FetchGymResponse)
-  async fetchGym(@Param('id') id: string) {
-    return await this.gymService.findGymById(id);
+  async fetchGym(@Param('_id') _id: string) {
+    return await this.gymService.findGymById(_id);
   }
 
   @Authorized()

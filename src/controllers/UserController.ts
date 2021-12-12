@@ -8,10 +8,10 @@ export default class UserController {
   private userService = new UserService();
 
   @Authorized()
-  @Get('/:id')
+  @Get('/:_id')
   @ResponseSchema(FetchUserResponse)
-  async fetchUser(@Param('id') id: string) {
-    return await this.userService.findUserById(id);
+  async fetchUser(@Param('_id') _id: string) {
+    return await this.userService.findUserById(_id);
   }
 
   @Authorized()

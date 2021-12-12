@@ -1,4 +1,4 @@
-import { IsMongoId, IsString, IsNumber, IsOptional, ValidateNested } from 'class-validator';
+import { IsString, IsNumber, IsDate, IsOptional, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 
 class Address {
@@ -22,7 +22,7 @@ class Location {
 }
 
 export class FetchGymResponse {
-  @IsMongoId()
+  @IsString()
   _id!: string;
 
   @IsString()
@@ -47,6 +47,12 @@ export class FetchGymResponse {
   @ValidateNested()
   @Type(() => Location)
   location?: Location;
+
+  @IsDate()
+  createdAt!: Date;
+
+  @IsDate()
+  updatedAt!: Date;
 }
 
 export class CreateGymRequest {

@@ -1,7 +1,8 @@
-import { IsMongoId, IsEmail, IsString, IsPhoneNumber, IsOptional, MinLength } from 'class-validator';
+import { UserRole } from '@/models/UserModel';
+import { IsEmail, IsString, IsPhoneNumber, IsOptional, MinLength, IsDate, IsArray } from 'class-validator';
 
 export class FetchUserResponse {
-  @IsMongoId()
+  @IsString()
   _id!: string;
 
   @IsEmail()
@@ -16,6 +17,16 @@ export class FetchUserResponse {
   @IsOptional()
   @IsString()
   picto?: string;
+
+  @IsArray()
+  @IsString()
+  roles!: UserRole[];
+
+  @IsDate()
+  createdAt!: Date;
+
+  @IsDate()
+  updatedAt!: Date;
 }
 
 export class CreateUserRequest {

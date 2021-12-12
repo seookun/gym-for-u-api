@@ -1,7 +1,8 @@
 import { Document, Schema, model } from 'mongoose';
 
 export enum UserRole {
-  Admin = 'Administrator',
+  Administrator = 'Administrator',
+  SecondaryAdministrator = 'Secondary Administrator',
   User = 'User',
 }
 
@@ -35,6 +36,7 @@ export const userSchema = new Schema<User>(
   {
     timestamps: true,
     toJSON: {
+      versionKey: false,
       transform(doc, ret) {
         ret._id = ret._id.toString();
         delete ret.password;
