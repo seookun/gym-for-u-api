@@ -15,6 +15,13 @@ export default class UserController {
   }
 
   @Authorized()
+  @Get('/session')
+  @ResponseSchema(FetchUserResponse)
+  async fetchSessionUser(@CurrentUser() userId: string) {
+    return await this.userService.findUserById(userId);
+  }
+
+  @Authorized()
   @Get()
   @ResponseSchema(FetchUserResponse, { isArray: true })
   async fetchUsers() {
