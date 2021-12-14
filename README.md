@@ -1,4 +1,4 @@
-# gym-for-u-api
+# gym-for-u-api (deprecated)
 
 ## Schema
 ### API Response
